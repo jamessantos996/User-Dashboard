@@ -31,66 +31,52 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" >
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">Test App</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Profile</a>
-                    </li>
-                </ul>
-                <a class="nav-link active" aria-current="page" href="/">Log off</a>
-            </div>
-        </div>
-    </nav>
+<?php
+    $this->load->view('partials/navbar');
+?>
     <div class="container-md">
         <div>
-            <h3 class="d-inline-block">Edit User #2</h3>
-            <a href="dashboard">Return to Dashboard</a>
+            <h3 class="d-inline-block">Edit User #<?=$users['id']?></h3>
+            <a href="/dashboard">Return to Dashboard</a>
         </div>
-        <form class="mx-auto my-3 p-3 d-inline-block">
+        <form class="mx-auto my-3 p-3 d-inline-block" action="/Users/edit_information" method="post">
             <h4>Edit Information</h4>
+            <input type="hidden" name="id" value="<?=$users['id']?>">
             <div class="form-group">
                 <label for="email">Email Address</label>
-                <input type="text" class="form-control" id="email" placeholder="james@village88.com">
+                <input type="text" class="form-control" name="email" id="email" value="<?=$users['email']?>">
             </div>
             <div class="form-group">
                 <label for="first_name">First Name </label>
-                <input type="text" class="form-control" id="first_name" placeholder="James">
+                <input type="text" class="form-control" name="first_name" id="first_name" value="<?=$users['first_name']?>">
             </div>
             <div class="form-group">
                 <label for="last_name">Last Name</label>
-                <input type="text" class="form-control" id="last_name" placeholder="Santos">
+                <input type="text" class="form-control" name="last_name" id="last_name" value="<?=$users['last_name']?>">
             </div>
             <div class="form-group">
                 <label for="user_level">User Level:</label>
-                <select class="form-select" aria-label="Default select example">
-                    <option value="normal">Normal</option>
-                    <option value="admin">Admin</option>
+                <select class="form-select" aria-label="Default select example" name="user_level">
+                    <option value="0">Normal</option>
+                    <option value="1">Admin</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Save</button>
+            <input type="submit" class="btn btn-primary" value="Save"></input>
         </form>
 
-        <form class="mx-5 my-3 p-3 d-inline-block">
+        <form class="mx-5 my-3 p-3 d-inline-block" action="/Users/edit_password" method="post">
             <h4>Change Password</h4>
+            <input type="hidden" name="id" value="<?=$users['id']?>">
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="text" class="form-control" id="password">
+                <input type="text" class="form-control" name="password" id="password">
             </div>
             <div class="form-group">
                 <label for="confirm_password">Password Confirmation</label>
-                <input type="text" class="form-control" id="confirm_password">
+                <input type="text" class="form-control" name="confirm_password" id="confirm_password">
             </div>
             
-            <button type="submit" class="btn btn-primary">Update Password</button>
+            <input type="submit" class="btn btn-primary" value="Update Password"></input>
         </form>
     </div>
 

@@ -31,65 +31,52 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">Test App</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Profile</a>
-                    </li>
-                </ul>
-                <a class="nav-link active" aria-current="page" href="/">Log off</a>
-            </div>
-        </div>
-    </nav>
+<?php
+    $this->load->view('partials/navbar');
+?>
     <h3>Edit Profile</h3>
     <div class="container-md">
-        <form class="mx-auto my-3 p-3 d-inline-block">
+        <form class="mx-auto my-3 p-3 d-inline-block" action="edit_information" method="post">
             <h4>Edit Information</h4>
+            <input type="hidden" name="id" value="<?=$this->session->userdata('id')?>">
             <div class="form-group">
                 <label for="email">Email Address</label>
-                <input type="text" class="form-control" id="email">
+                <input type="text" class="form-control" name="email" id="email" value=<?=$this->session->userdata('email')?>>
             </div>
             <div class="form-group">
                 <label for="first_name">First Name </label>
-                <input type="text" class="form-control" id="first_name">
+                <input type="text" class="form-control" name="first_name" id="first_name" value=<?=$this->session->userdata('first_name')?>>
             </div>
             <div class="form-group">
                 <label for="last_name">Last Name</label>
-                <input type="text" class="form-control" id="last_name">
+                <input type="text" class="form-control" name="last_name" id="last_name" value=<?=$this->session->userdata('last_name')?>>
             </div>
             
-            <button type="submit" class="btn btn-primary">Save</button>
+            <input type="submit" class="btn btn-primary" value="Save"></input>
         </form>
 
-        <form class="mx-5 my-3 p-3 d-inline-block">
+        <form class="mx-5 my-3 p-3 d-inline-block" action="edit_password" method="post">
             <h4>Change Password</h4>
+            <input type="hidden" name="id" value="<?=$this->session->userdata('id')?>">
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="text" class="form-control" id="password">
+                <input type="text" class="form-control" name="password" id="password">
             </div>
             <div class="form-group">
                 <label for="confirm_password">Password Confirmation</label>
-                <input type="text" class="form-control" id="confirm_password">
+                <input type="text" class="form-control" name="confirm_password" id="confirm_password">
             </div>
             
-            <button type="submit" class="btn btn-primary">Update Password</button>
+            <input type="submit" class="btn btn-primary" value="Update Password"></input>
         </form>
 
-        <form class="mx-auto my-3 p-3 d-block description-form">
+        <form class="mx-auto my-3 p-3 d-block description-form" action="edit_description" method="post">
             <h4>Edit Description</h4>
+            <input type="hidden" name="id" value="<?=$this->session->userdata('id')?>">
             <div class="form-group">
-                <textarea name="description" id="description" cols="30" rows="4"></textarea>
+                <textarea name="description" name="description" id="description" cols="30" rows="4"></textarea>
             </div>           
-            <button type="submit" class="btn btn-primary">Save</button>
+            <input type="submit" class="btn btn-primary" value="Save"></input>
         </form>
     </div>
 

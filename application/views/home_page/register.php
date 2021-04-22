@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New User</title>
+    <title>Register</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <style>
         form{
@@ -16,6 +16,9 @@
         }
             .form-group{
                 padding: 5px 10px 10px 0px;
+            }
+            a{
+                margin-top: 10px;
             }
             .errors{
                 background-color: #FF9494;
@@ -29,11 +32,8 @@
 <?php
     $this->load->view('partials/navbar');
 ?>
-    <form class="mx-auto my-3 p-3" action="process_new" method="post">
-        <div>
-            <h1 class="d-inline-block">Add a new user</h1>
-            <a href="/dashboard">Return to Dashboard</a>
-        </div>
+    <form class="mx-auto my-3 p-3" action="Home_pages/process_register" method="post">
+        <h1>Register</h1>
 <?php
     if($this->session->has_userdata('errors')){    
 ?>
@@ -61,7 +61,8 @@
             <label for="confirm_password">Password Confirmation</label>
             <input type="password" class="form-control" name="confirm_password" id="confirm_password">
         </div>
-        <button type="submit" class="btn btn-primary">Create</button>
+        <input type="submit" class="btn btn-primary" value="Register"></input>
+        <a class="d-block" href="login">Already have an account? Login</a>
     </form>
 </body>
 </html>

@@ -7,7 +7,7 @@
     <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <style>
-        table{
+       table{
             border: 2px solid black;
         }
             th,td{
@@ -15,34 +15,22 @@
                 border-right: 2px solid black;
 
             }
+            th{
+                background-color: #ccc;
+            }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">Test App</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Profile</a>
-                    </li>
-                </ul>
-                <a class="nav-link active" aria-current="page" href="/">Log off</a>
-            </div>
-        </div>
-    </nav>
+<?php
+    $this->load->view('partials/navbar');
+?>
     <div class="container-md my-5 p-3">
         <table>
             <div>
                 <h4 class="d-inline-block">Manage Users</h4>
-                <a class="d-inline-block" href="/">Add new</a>
+                <a class="d-inline-block" href="Users/new">Add new</a>
             </div>
+
             <tr>
                 <th>ID</th>
                 <th>Name</th>
@@ -51,30 +39,26 @@
                 <th>User_Level</th>
                 <th>Actions</th>
             </tr>
+<?php
+        for($i = 0; $i < count($users); $i++){
+            if($users[$i]['user_level'] == 1){
+                $user_level = "Admin";
+            }
+            else{
+                $user_level = "Normal";
+            }
+?>
             <tr>
-                <td>1</td>
-                <td><a href="">Michael Choi</a></td>
-                <td>michael@village88.com</td>
-                <td>Dec. 24th 2012</td>
-                <td>admin</td>
-                <td><a href="/">Edit</a> | <a href="/">Remove</a></td>
+                <td><?=$users[$i]['id']?></td>
+                <td><a href="Users/show/<?=$users[$i]['id']?>"><?=$users[$i]['name']?></a></td>
+                <td><?=$users[$i]['email']?></td>
+                <td><?=$users[$i]['created_at']?></td>
+                <td><?=$user_level?></td>
+                <td><a href="/Users/edit/<?=$users[$i]['id']?>">Edit</a> | <a href="/Users/remove/<?=$users[$i]['id']?>">Remove</a></td>
             </tr>
-            <tr>
-                <td>2</td>
-                <td><a href="">James Santos</a></td>
-                <td>jamessantos996@village88.com</td>
-                <td>Mar. 8th 2021</td>
-                <td>admin</td>
-                <td><a href="/">Edit</a> | <a href="/">Remove</a></td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td><a href="">Dummy</a></td>
-                <td>dummy@village88.com</td>
-                <td>Mar. 19th 2021</td>
-                <td>normal</td>
-                <td><a href="/">Edit</a> | <a href="/">Remove</a></td>
-            </tr>
+<?php
+        }
+?>
         </table>
     </div>
 </body>
