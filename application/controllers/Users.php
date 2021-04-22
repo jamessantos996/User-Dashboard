@@ -7,7 +7,17 @@
         }
         
         public function edit(){
-            $this->load->view('users/edit');
+            $id = 2;
+            if($id == 1){
+                $this->load->view('users/edit');
+            }
+            else{
+                $this->load->view('users/admin_edit');
+            }
+        }
+
+        public function show(){
+            $this->load->view('users/show');
         }
     }
 

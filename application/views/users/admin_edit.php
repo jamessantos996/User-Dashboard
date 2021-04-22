@@ -7,11 +7,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Profile</title>
+    <title>Edit User</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <style>
         h3{
-            padding: 20px;
+            margin: 20px 0px;
         }
         form{
             width: 500px;
@@ -31,7 +31,7 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" >
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Test App</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,23 +50,32 @@
             </div>
         </div>
     </nav>
-    <h3>Edit Profile</h3>
     <div class="container-md">
+        <div>
+            <h3 class="d-inline-block">Edit User #2</h3>
+            <a href="dashboard">Return to Dashboard</a>
+        </div>
         <form class="mx-auto my-3 p-3 d-inline-block">
             <h4>Edit Information</h4>
             <div class="form-group">
                 <label for="email">Email Address</label>
-                <input type="text" class="form-control" id="email">
+                <input type="text" class="form-control" id="email" placeholder="james@village88.com">
             </div>
             <div class="form-group">
                 <label for="first_name">First Name </label>
-                <input type="text" class="form-control" id="first_name">
+                <input type="text" class="form-control" id="first_name" placeholder="James">
             </div>
             <div class="form-group">
                 <label for="last_name">Last Name</label>
-                <input type="text" class="form-control" id="last_name">
+                <input type="text" class="form-control" id="last_name" placeholder="Santos">
             </div>
-            
+            <div class="form-group">
+                <label for="user_level">User Level:</label>
+                <select class="form-select" aria-label="Default select example">
+                    <option value="normal">Normal</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
             <button type="submit" class="btn btn-primary">Save</button>
         </form>
 
@@ -82,14 +91,6 @@
             </div>
             
             <button type="submit" class="btn btn-primary">Update Password</button>
-        </form>
-
-        <form class="mx-auto my-3 p-3 d-block description-form">
-            <h4>Edit Description</h4>
-            <div class="form-group">
-                <textarea name="description" id="description" cols="30" rows="4"></textarea>
-            </div>           
-            <button type="submit" class="btn btn-primary">Save</button>
         </form>
     </div>
 
