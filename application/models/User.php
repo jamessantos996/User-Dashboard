@@ -21,6 +21,27 @@
             return $this->db->query($query, $value)->row_array();
         }
 
+        function get_all_messages($id){
+            $query = "SELECT messages.id, users.first_name, users.last_name, messages.content, messages.created_at FROM users
+            INNER JOIN messages
+                ON users.id = messages.user_id
+            WHERE messages.user_target = ?
+            ORDER BY messages.created_at DESC";
+
+            $value = array($id);
+            return $this->db->query($query, $value)->result_array();
+        }
+
+        function get_all_comments($id){
+            $query = "SELECT users.id, users.first_name, users.last_name, comments.content, comments.created_at FROM users
+            INNER JOIN comments
+                ON users.id = comments.user_id
+            WHERE comments.message_id = ?
+            ORDER BY comments.created_at ASC";
+
+           return $this->db->query($query, $id)->result_array();
+        }
+
         function update_information($data){
             $query = "UPDATE users SET email = ?, first_name = ?, last_name = ? WHERE id = ?";
             $values = array($data['email'], $data['first_name'], $data['last_name'], $data['id']);
@@ -42,6 +63,25 @@
         function update_description($data, $id){
             $query = "UPDATE users SET description = ? WHERE id = ?";
             $values = array($data['description'], $id);
+            return $this->db->query($query, $values);
+        }
+
+        function delete_user($id){
+            return $this->db->query("DELETE FROM users WHERE id = ?", $id);
+        }
+
+        function post_message($data){
+            $query = "INSERT INTO messages(user_id, user_target, content, created_at, updated_at)
+                    VALUES(?,?,?,?,?)";
+            $values = array($data['id'], $data['user_target'], $data['message'], date('Y-m-d H:i:s'), date('Y-m-d H:i:s'));
+
+            return $this->db->query($query, $values);
+        }
+
+        function post_comment($data){
+            $query = "INSERT INTO comments(user_id, message_id, message_target, content, created_at, updated_at)
+                    VALUES(?,?,?,?,?,?)";
+            $values = array($data['id'], $data['message_id'], $data['message_target'], $data['comment'], date('Y-m-d H:i:s'), date('Y-m-d H:i:s'));
             return $this->db->query($query, $values);
         }
     }

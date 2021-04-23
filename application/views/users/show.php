@@ -1,5 +1,33 @@
 <?php 
     if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+    function time_elapsed_string($datetime, $full = false) {
+        $now = new DateTime;
+        $ago = new DateTime($datetime);
+        $diff = $now->diff($ago);
+    
+        $diff->w = floor($diff->d / 7);
+        $diff->d -= $diff->w * 7;
+    
+        $string = array(
+            'y' => 'year',
+            'm' => 'month',
+            'w' => 'week',
+            'd' => 'day',
+            'h' => 'hour',
+            'i' => 'minute',
+            's' => 'second',
+        );
+        foreach ($string as $k => &$v) {
+            if ($diff->$k) {
+                $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+            } else {
+                unset($string[$k]);
+            }
+        }
+    
+        if (!$full) $string = array_slice($string, 0, 1);
+        return $string ? implode(', ', $string) . ' ago' : 'just now';
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,28 +69,50 @@
         <p class="lead">Email address: <?=$user['email']?></p>
         <p class="lead">Description: <?=$user['description']?></p>
 
-        <form class="mx-auto my-3 p-3">
+        <form class="mx-auto my-3 p-3" action="/Users/post_message" method="post">
+            <input type="hidden" name="id" value="<?=$this->session->userdata('id')?>">
+            <input type="hidden" name="user_target" value="<?=$user['id']?>">
             <div class="mb-3">
                 <label for="message" class="form-label">Leave message for <?=$user['first_name']?></label>
-                <input type="text" class="form-control" id="message">
+                <input type="text" class="form-control" name="message" id="message">
             </div>
             <input class="btn btn-primary"type="submit" value="Post">
         </form>
 
         <div class="messages-container">
-            <h5>Mark Guillen wrote <span>7 hours ago</span></h5>
-            <p class="message">Hi Michael! I am having fun building BoomYEAH!</p>
-                <div class="comments-container">
-                    <a href="">Diana Manlulu <span>23 minutes ago</span></a>
-                    <p class="comment">Awesome!</p>
+<?php
+        foreach($messages as $message){
+?>
+            <h5><?=$message['first_name']?> wrote <span><?=time_elapsed_string($message['created_at'])?></span></h5>
+            <p class="message"><?=$message['content']?></p>
+            <div class="comments-container">
+<?php
+            $comments = $this->User->get_all_comments($message['id']);
+            
+            foreach($comments as $comment){
+?>              
+                
+                <a href="/Users/show/<?=$comment['id']?>"><?=$comment['first_name']?> <?=$comment['last_name']?> <span><?=time_elapsed_string($comment['created_at'])?></span></a>
+                <p class="comment"><?=$comment['content']?></p>
+<?php
+            }
+?>         
+            </div>
+            <form class="mx-auto my-3 p-3" action="/Users/post_comment" method="post">
+                <input type="hidden" name="id" value="<?=$this->session->userdata('id')?>">
+                <input type="hidden" name="user_target" value="<?=$user['id']?>">
+                <input type="hidden" name="message_id" value="<?=$message['id']?>">
+                <div class="mb-3">
+                    <label for="comment" class="form-label">Leave a comment</label>
+                    <input type="text" class="form-control" name="comment" id="comment">
                 </div>
-                <form class="mx-auto my-3 p-3">
-                    <div class="mb-3">
-                        <label for="message" class="form-label">Leave a comment</label>
-                        <input type="text" class="form-control" id="message">
-                    </div>
-                    <input class="btn btn-primary"type="submit" value="Post">
-                </form>
+                <input class="btn btn-primary"type="submit" value="Post">
+            </form>
+<?php
+        }
+?>
+            
+            
         </div>
     </div>
 </body>

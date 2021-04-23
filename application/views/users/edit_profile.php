@@ -38,18 +38,18 @@
     <div class="container-md">
         <form class="mx-auto my-3 p-3 d-inline-block" action="edit_information" method="post">
             <h4>Edit Information</h4>
-            <input type="hidden" name="id" value="<?=$this->session->userdata('id')?>">
+            <input type="hidden" name="id" value="<?=$users['id']?>">
             <div class="form-group">
                 <label for="email">Email Address</label>
-                <input type="text" class="form-control" name="email" id="email" value=<?=$this->session->userdata('email')?>>
+                <input type="text" class="form-control" name="email" id="email" value=<?=$users['email']?>>
             </div>
             <div class="form-group">
                 <label for="first_name">First Name </label>
-                <input type="text" class="form-control" name="first_name" id="first_name" value=<?=$this->session->userdata('first_name')?>>
+                <input type="text" class="form-control" name="first_name" id="first_name" value=<?=$users['first_name']?>>
             </div>
             <div class="form-group">
                 <label for="last_name">Last Name</label>
-                <input type="text" class="form-control" name="last_name" id="last_name" value=<?=$this->session->userdata('last_name')?>>
+                <input type="text" class="form-control" name="last_name" id="last_name" value=<?=$users['last_name']?>>
             </div>
             
             <input type="submit" class="btn btn-primary" value="Save"></input>
@@ -57,7 +57,7 @@
 
         <form class="mx-5 my-3 p-3 d-inline-block" action="edit_password" method="post">
             <h4>Change Password</h4>
-            <input type="hidden" name="id" value="<?=$this->session->userdata('id')?>">
+            <input type="hidden" name="id" value="<?=$users['id']?>">
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="text" class="form-control" name="password" id="password">
@@ -72,7 +72,7 @@
 
         <form class="mx-auto my-3 p-3 d-block description-form" action="edit_description" method="post">
             <h4>Edit Description</h4>
-            <input type="hidden" name="id" value="<?=$this->session->userdata('id')?>">
+            <input type="hidden" name="id" value="<?=$users['id']?>">
             <div class="form-group">
                 <textarea name="description" name="description" id="description" cols="30" rows="4"></textarea>
             </div>           

@@ -24,8 +24,8 @@
                 redirect('register');
             }
             else{
-                $this->load->model('User');
-                $this->User->insert_new_user($this->input->post());
+                $this->load->model('Home_page');
+                $this->Home_page->insert_new_user($this->input->post());
                 redirect('login');
             }   
         }

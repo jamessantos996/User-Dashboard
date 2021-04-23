@@ -21,7 +21,9 @@
             }
         }
         public function edit_profile(){
-            $this->load->view('users/edit_profile');           
+            $this->load->model('User');
+            $result['users'] = $this->User->get_user_info($this->session->userdata('id'));
+            $this->load->view('users/edit_profile', $result);           
         }
 
         public function edit($id){
@@ -44,9 +46,6 @@
                 else{
                     $this->User->update_information($this->input->post());
                 }
-                $this->session->set_userdata('first_name', $this->input->post('first_name'));
-                $this->session->set_userdata('last_name', $this->input->post('last_name'));
-                $this->session->set_userdata('email', $this->input->post('email'));
                 redirect('/dashboard');
             }
         }
@@ -75,16 +74,40 @@
         public function show($id){
             $this->load->model('User');
             $result['user'] = $this->User->get_user_by_id($id);
+            $result['messages'] = $this->User->get_all_messages($id);
+            // $result['comments'] = $this->User->get_all_comments($id);
+            // var_dump($result['messages'][0]['id']);
             $this->load->view('users/show', $result);
         }
 
         public function remove($id){
-            $this->load->view('users/remove');
+            $this->load->model('User');
+            $data['user'] = $this->User->get_user_info($id);
+
+            $this->load->view('users/remove', $data);
         }
 
         public function process_remove($id){
-            
+            $this->load->model('User');
+            $this->User->delete_user($id);
+
+            redirect('/dashboard');
         }
+
+        public function post_message(){
+            $this->load->model('User');
+            $this->User->post_message($this->input->post());
+
+            redirect('/Users/show/' . $this->input->post('user_target'));
+        }
+
+        public function post_comment(){
+            $this->load->model('User');
+            $this->User->post_comment($this->input->post());
+
+            redirect('/Users/show/' . $this->input->post('user_target'));
+        }
+
     }
 
 
