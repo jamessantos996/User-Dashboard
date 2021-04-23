@@ -81,19 +81,17 @@
 
         <div class="messages-container">
 <?php
-        foreach($messages as $message){
+        foreach($inbox as $message){
 ?>
-            <h5><?=$message['first_name']?> wrote <span><?=time_elapsed_string($message['created_at'])?></span></h5>
-            <p class="message"><?=$message['content']?></p>
+            <h5><?=$message['message_sender_name']?> wrote <span><?=time_elapsed_string($message['message_date'])?></span></h5>
+            <p class="message"><?=$message['message_content']?></p>
             <div class="comments-container">
 <?php
-            $comments = $this->User->get_all_comments($message['id']);
-            
-            foreach($comments as $comment){
+           foreach($message['comments'] as $comment){
 ?>              
                 
-                <a href="/Users/show/<?=$comment['id']?>"><?=$comment['first_name']?> <?=$comment['last_name']?> <span><?=time_elapsed_string($comment['created_at'])?></span></a>
-                <p class="comment"><?=$comment['content']?></p>
+                <a href="/Users/show/<?=$user['id']?>"><?=$comment['comment_sender_name']?> <span><?=time_elapsed_string($comment['comment_date'])?></span></a>
+                <p class="comment"><?=$comment['comment_content']?></p>
 <?php
             }
 ?>         
@@ -101,7 +99,7 @@
             <form class="mx-auto my-3 p-3" action="/Users/post_comment" method="post">
                 <input type="hidden" name="id" value="<?=$this->session->userdata('id')?>">
                 <input type="hidden" name="user_target" value="<?=$user['id']?>">
-                <input type="hidden" name="message_id" value="<?=$message['id']?>">
+                <input type="hidden" name="message_id" value="<?=$message['message_id']?>">
                 <div class="mb-3">
                     <label for="comment" class="form-label">Leave a comment</label>
                     <input type="text" class="form-control" name="comment" id="comment">

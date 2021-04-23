@@ -9,7 +9,25 @@
 
             return $this->db->query($query, $values);
         }
+        function get_messages($id){
+            $query = 'SELECT messages.id AS message_id, content AS message_content, 
+            messages.created_at AS message_date, CONCAT(first_name," ",last_name) AS message_sender_name 
+            FROM messages LEFT JOIN users ON messages.user_id = users.id 
+            WHERE messages.user_target = ?
+            ORDER BY messages.created_at DESC';
 
+            return $this->db->query($query, $id)->result_array();
+        }
+        function get_comments_from_message_id($message_id){
+            $query = "SELECT comments.message_id, 
+            CONCAT(first_name,' ',last_name) AS comment_sender_name, 
+            content AS comment_content, comments.created_at AS comment_date 
+            FROM comments LEFT JOIN users ON comments.user_id = users.id 
+            WHERE comments.message_id = ? 
+            ORDER BY comments.created_at ASC";
+
+            return $this->db->query($query, $message_id)->result_array();
+        }
         function get_user_by_id($id){
             $query = "SELECT id, first_name, CONCAT(first_name, ' ', last_name) AS name, email, DATE_FORMAT(created_at, '%M %D %Y') AS created_at, description FROM users WHERE id = ?";
             $value = array($id);

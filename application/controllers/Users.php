@@ -73,11 +73,19 @@
 
         public function show($id){
             $this->load->model('User');
-            $result['user'] = $this->User->get_user_by_id($id);
-            $result['messages'] = $this->User->get_all_messages($id);
-            // $result['comments'] = $this->User->get_all_comments($id);
-            // var_dump($result['messages'][0]['id']);
-            $this->load->view('users/show', $result);
+
+            $user_messages = $this->User->get_messages($id);
+            $user = $this->User->get_user_by_id($id);
+            
+            $inbox = array();
+            foreach($user_messages as $user_message){
+                $comments = $this->User->get_comments_from_message_id($user_message['message_id']);
+                $user_message["comments"] = $comments;
+                $inbox[] = $user_message;
+            }
+            $param = array("first_name"=>$this->session->userdata('first_name'), "inbox"=>$inbox, "user" => $user);
+
+            $this->load->view('users/show', $param);
         }
 
         public function remove($id){
